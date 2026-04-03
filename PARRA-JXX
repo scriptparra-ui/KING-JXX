@@ -1,4 +1,4 @@
--- [[ PARRA NINJA HUB - RED & BLACK ELITE FULL EDITION 👑 ]]
+-- [[ JXX-HUD-V2 - RED & BLACK ELITE FULL EDITION 👑 ]]
 local CLAVE_CORRECTA = "papadeacusado"
 local Players = game:GetService("Players")
 local L_Plr = Players.LocalPlayer
@@ -101,7 +101,7 @@ local function ExecuteHub()
     Players.PlayerAdded:Connect(CreateESP)
 
     -- // INTERFAZ BOTÓN FLOTANTE //
-    local OpenBtn = Instance.new("TextButton", ScreenGui); OpenBtn.Size = UDim2.new(0, 50, 0, 50); OpenBtn.Position = UDim2.new(0, 15, 0.5, 0); OpenBtn.BackgroundColor3 = Color3.fromRGB(20, 0, 0); OpenBtn.Text = "N"; OpenBtn.TextColor3 = Color3.new(1,0,0); OpenBtn.TextSize = 25; OpenBtn.Visible = false; OpenBtn.Active = true; OpenBtn.Draggable = true; Instance.new("UICorner", OpenBtn).CornerRadius = UDim.new(1, 0); Instance.new("UIStroke", OpenBtn).Color = Color3.new(1,0,0)
+    local OpenBtn = Instance.new("TextButton", ScreenGui); OpenBtn.Size = UDim2.new(0, 50, 0, 50); OpenBtn.Position = UDim2.new(0, 15, 0.5, 0); OpenBtn.BackgroundColor3 = Color3.fromRGB(20, 0, 0); OpenBtn.Text = "P"; OpenBtn.TextColor3 = Color3.new(1,0,0); OpenBtn.TextSize = 25; OpenBtn.Visible = false; OpenBtn.Active = true; OpenBtn.Draggable = true; Instance.new("UICorner", OpenBtn).CornerRadius = UDim.new(1, 0); Instance.new("UIStroke", OpenBtn).Color = Color3.new(1,0,0)
 
     -- // LOGIN //
     local KeyFrame = Instance.new("Frame", ScreenGui); KeyFrame.Size = UDim2.new(0, 400, 0, 250); KeyFrame.Position = UDim2.new(0.5, -200, 0.5, -125); KeyFrame.BackgroundColor3 = Color3.fromRGB(5, 5, 5); KeyFrame.Active = true; KeyFrame.Draggable = true; Instance.new("UICorner", KeyFrame); Instance.new("UIStroke", KeyFrame).Color = Color3.fromRGB(150, 0, 0)
@@ -130,7 +130,7 @@ local function ExecuteHub()
     end
 
     -- Combat Tab
-    AddBtn(Tabs.Combat, "AUTO-LEAVE PARRA", function() _G.AutoLeave = not _G.AutoLeave end)
+    AddBtn(Tabs.Combat, "AUTO-LEAVE-JXX", function() _G.AutoLeave = not _G.AutoLeave end)
     AddBtn(Tabs.Combat, "AUXILIO DISPARO", function() _G.AuxilioMobile = not _G.AuxilioMobile end)
     AddBtn(Tabs.Combat, "LOAD AIMBOT MOBILE", function() loadstring(game:HttpGet("https://raw.githubusercontent.com/scripting-star/Aimbot-V1-Premium/refs/heads/main/Aim-v1.01"))() end)
     local HitInput = Instance.new("TextBox", Tabs.Combat); HitInput.Size = UDim2.new(1, -10, 0, 40); HitInput.PlaceholderText = "TAMAÑO HITBOX (15)"; HitInput.BackgroundColor3 = Color3.fromRGB(30,0,0); HitInput.TextColor3 = Color3.new(1,1,1); Instance.new("UICorner", HitInput)
@@ -151,8 +151,8 @@ local function ExecuteHub()
 
     -- Misc Tab
     AddBtn(Tabs.Misc, "FPS ANTI-LAG", function() for _,v in pairs(workspace:GetDescendants()) do if v:IsA("BasePart") then v.Material = Enum.Material.SmoothPlastic end end end)
-    AddBtn(Tabs.Misc, "DELETE PARRA (FIXED)", function() 
-        local t = Instance.new("Tool"); t.Name = "ACUSADO_DEL"; t.RequiresHandle = false; t.Parent = L_Plr.Backpack
+    AddBtn(Tabs.Misc, "DELETE-JXX (FIXED)", function() 
+        local t = Instance.new("Tool"); t.Name = "JXX_DEL"; t.RequiresHandle = false; t.Parent = L_Plr.Backpack
         t.Activated:Connect(function() if Mouse.Target then Mouse.Target:Destroy() end end)
     end)
 
