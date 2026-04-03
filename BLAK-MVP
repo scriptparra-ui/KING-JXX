@@ -1,0 +1,238 @@
+-- [[ ACUSADO NINJA HUB MASHMELLOW - ANTI-TIMEOUT EDITION ]] --
+
+local _K = "BACK01"
+local lp = game:GetService("Players").LocalPlayer
+local vim = game:GetService("VirtualInputManager")
+local vu = game:GetService("VirtualUser")
+local coreGui = game:GetService("CoreGui")
+local http = game:GetService("HttpService")
+
+-- [ ANTI-TIMEOUT / ANTI-KICK ]
+if getconnections then
+    for _, v in pairs(getconnections(lp.Idled)) do
+        v:Disable()
+    end
+end
+
+local function GetRnd() return http:GenerateGUID(false) end
+
+-- Limpieza
+for _, v in pairs(coreGui:GetChildren()) do
+    if v:FindFirstChild("AC_TAG_SEC") then v:Destroy() end
+end
+
+local ScreenGui = Instance.new("ScreenGui", coreGui)
+ScreenGui.Name = GetRnd()
+local tag = Instance.new("BoolValue", ScreenGui)
+tag.Name = "AC_TAG_SEC"
+
+-- [ PALETA DE COLORES: MORADO Y NEGRO ]
+local PurpleTheme = Color3.fromRGB(130, 50, 255) -- Morado Neón
+local DarkBg = Color3.fromRGB(10, 10, 12)        -- Negro Profundo
+local DarkerBg = Color3.fromRGB(5, 5, 7)         -- Negro Casi Total
+
+-- [ BOTÓN DE REGRESO ]
+local OpenBtn = Instance.new("TextButton", ScreenGui)
+OpenBtn.Size = UDim2.new(0, 50, 0, 50)
+OpenBtn.Position = UDim2.new(0, 10, 0.5, -25)
+OpenBtn.BackgroundColor3 = DarkBg
+OpenBtn.Text = "NINJA"
+OpenBtn.TextColor3 = PurpleTheme
+OpenBtn.Font = Enum.Font.GothamBold
+OpenBtn.Visible = false
+Instance.new("UICorner", OpenBtn)
+Instance.new("UIStroke", OpenBtn).Color = PurpleTheme
+
+-- [ LOGIN ]
+local LoginFrame = Instance.new("Frame", ScreenGui)
+LoginFrame.Size = UDim2.new(0, 300, 0, 200)
+LoginFrame.Position = UDim2.new(0.5, -150, 0.4, -100)
+LoginFrame.BackgroundColor3 = DarkBg
+Instance.new("UICorner", LoginFrame)
+Instance.new("UIStroke", LoginFrame).Color = PurpleTheme
+
+local LTitle = Instance.new("TextLabel", LoginFrame)
+LTitle.Size = UDim2.new(1, 0, 0, 40)
+LTitle.Text = "MASHMELLOW SECURITY"
+LTitle.TextColor3 = PurpleTheme
+LTitle.Font = Enum.Font.GothamBold
+LTitle.BackgroundTransparency = 1
+
+local KeyInput = Instance.new("TextBox", LoginFrame)
+KeyInput.Size = UDim2.new(0.8, 0, 0, 40)
+KeyInput.Position = UDim2.new(0.1, 0, 0.4, 0)
+KeyInput.PlaceholderText = "ENTER KEY"
+KeyInput.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+KeyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", KeyInput)
+
+local LoginBtn = Instance.new("TextButton", LoginFrame)
+LoginBtn.Size = UDim2.new(0.8, 0, 0, 40)
+LoginBtn.Position = UDim2.new(0.1, 0, 0.75, 0)
+LoginBtn.BackgroundColor3 = PurpleTheme
+LoginBtn.Text = "VERIFICAR"
+LoginBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoginBtn.Font = Enum.Font.GothamBold
+Instance.new("UICorner", LoginBtn)
+
+local function StartHub()
+    LoginFrame:Destroy()
+    
+    local MainFrame = Instance.new("Frame", ScreenGui)
+    MainFrame.Size = UDim2.new(0, 460, 0, 350)
+    MainFrame.Position = UDim2.new(0.5, -230, 0.5, -175)
+    MainFrame.BackgroundColor3 = DarkBg
+    MainFrame.Active = true
+    MainFrame.Draggable = true
+    Instance.new("UICorner", MainFrame)
+    Instance.new("UIStroke", MainFrame).Color = PurpleTheme
+
+    local CloseBtn = Instance.new("TextButton", MainFrame)
+    CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+    CloseBtn.Position = UDim2.new(1, -35, 0, 5)
+    CloseBtn.BackgroundColor3 = Color3.fromRGB(80, 0, 0) -- Rojo oscuro para que no desentone
+    CloseBtn.Text = "X"
+    CloseBtn.TextColor3 = Color3.new(1,1,1)
+    CloseBtn.Font = Enum.Font.GothamBold
+    Instance.new("UICorner", CloseBtn)
+
+    CloseBtn.MouseButton1Click:Connect(function()
+        MainFrame.Visible = false
+        OpenBtn.Visible = true
+    end)
+
+    OpenBtn.MouseButton1Click:Connect(function()
+        MainFrame.Visible = true
+        OpenBtn.Visible = false
+    end)
+
+    local Title = Instance.new("TextLabel", MainFrame)
+    Title.Size = UDim2.new(1, 0, 0, 40)
+    Title.Text = "ACUSADO NINJA HUB MASHMELLOW"
+    Title.TextColor3 = PurpleTheme
+    Title.Font = Enum.Font.GothamBold
+    Title.BackgroundTransparency = 1
+
+    local InfoLabel = Instance.new("TextLabel", MainFrame)
+    InfoLabel.Size = UDim2.new(0.55, 0, 0, 260)
+    InfoLabel.Position = UDim2.new(0.05, 0, 0, 65)
+    InfoLabel.BackgroundColor3 = DarkerBg
+    InfoLabel.TextColor3 = Color3.fromRGB(220, 220, 220)
+    InfoLabel.Font = Enum.Font.Code
+    InfoLabel.TextSize = 12
+    InfoLabel.TextXAlignment = Enum.TextXAlignment.Left
+    InfoLabel.TextYAlignment = Enum.TextYAlignment.Top
+    Instance.new("UICorner", InfoLabel)
+    Instance.new("UIStroke", InfoLabel).Color = Color3.fromRGB(40, 40, 45)
+
+    local function CreateBtn(txt, pos)
+        local b = Instance.new("TextButton", MainFrame)
+        b.Size = UDim2.new(0.33, 0, 0, 50)
+        b.Position = pos
+        b.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+        b.TextColor3 = Color3.fromRGB(255, 255, 255)
+        b.Font = Enum.Font.GothamBold
+        b.Text = txt
+        Instance.new("UICorner", b)
+        local stroke = Instance.new("UIStroke", b)
+        stroke.Color = PurpleTheme
+        stroke.Thickness = 0.8
+        return b
+    end
+
+    local FarmBtn = CreateBtn("FARM MASHMELLOW", UDim2.new(0.63, 0, 0, 65))
+    local SellBtn = CreateBtn("SELL MASHMELLOW", UDim2.new(0.63, 0, 0, 130))
+    local ToolBtn = CreateBtn("MASHMELLOW TOOL", UDim2.new(0.63, 0, 0, 195))
+
+    local farmActive, sellActive = false, false
+    local items = {"Water", "Sugar Block Bag", "Gelatin", "Empty Bag"}
+
+    FarmBtn.MouseButton1Click:Connect(function()
+        farmActive = not farmActive
+        FarmBtn.Text = farmActive and "STOP FARM" or "FARM MASHMELLOW"
+        FarmBtn.BackgroundColor3 = farmActive and Color3.fromRGB(100, 0, 150) or Color3.fromRGB(25, 25, 30)
+        task.spawn(function()
+            while farmActive do
+                pcall(function()
+                    for _, itemName in ipairs(items) do
+                        if not farmActive then break end
+                        local tool = lp.Backpack:FindFirstChild(itemName) or (lp.Character and lp.Character:FindFirstChild(itemName))
+                        if tool then
+                            lp.Character.Humanoid:EquipTool(tool)
+                            task.wait(0.4)
+                            vim:SendMouseButtonEvent(0, 0, 0, true, game, 0)
+                            task.wait(0.1)
+                            vim:SendMouseButtonEvent(0, 0, 0, false, game, 0)
+                            task.wait(0.2)
+                            vim:SendKeyEvent(true, Enum.KeyCode.E, false, game)
+                            task.wait(0.1)
+                            vim:SendKeyEvent(false, Enum.KeyCode.E, false, game)
+                            task.wait(1.6)
+                        end
+                    end
+                end)
+                task.wait(0.7)
+            end
+        end)
+    end)
+
+    SellBtn.MouseButton1Click:Connect(function()
+        sellActive = not sellActive
+        SellBtn.Text = sellActive and "AUTO-SELL ON" or "SELL MASHMELLOW"
+        SellBtn.BackgroundColor3 = sellActive and PurpleTheme or Color3.fromRGB(25, 25, 30)
+    end)
+
+    ToolBtn.MouseButton1Click:Connect(function()
+        local t = Instance.new("Tool", lp.Backpack)
+        t.Name = "MASHMELLOW DELETE"
+        t.RequiresHandle = false
+        t.Activated:Connect(function()
+            local m = lp:GetMouse()
+            if m.Target then pcall(function() m.Target:Destroy() end) end
+        end)
+    end)
+
+    -- Bucle de Info e Inventario
+    task.spawn(function()
+        while task.wait(1.5) do
+            local char = lp.Character
+            if not char or not char:FindFirstChild("HumanoidRootPart") then continue end
+            local c = {W=0, S=0, G=0, B=0, Sm=0, M=0, L=0}
+            local inv = lp.Backpack:GetChildren()
+            for _, v in pairs(char:GetChildren()) do if v:IsA("Tool") then table.insert(inv, v) end end
+            for _, i in pairs(inv) do
+                if i.Name == "Water" then c.W=c.W+1 
+                elseif i.Name == "Sugar Block Bag" then c.S=c.S+1 
+                elseif i.Name == "Gelatin" then c.G=c.G+1 
+                elseif i.Name == "Empty Bag" then c.B=c.B+1 
+                elseif i.Name:find("Small") then c.Sm=c.Sm+1 
+                elseif i.Name:find("Medium") then c.M=c.M+1 
+                elseif i.Name:find("Large") then c.L=c.L+1 end
+            end
+            InfoLabel.Text = string.format("\n [ ACUSADO MASHMELLOW HUB ]\n\n PRODUCTOS:\n - Small: %d\n - Medium: %d\n - Large: %d\n\n MATERIALES:\n - Agua: %d\n - Azucar: %d\n - Gelatina:%d\n - Bolsas: %d\n\n [ SEGURIDAD ]\n Status: Protegido\n Anti-Kick: Activo", c.Sm, c.M, c.L, c.W, c.S, c.G, c.B)
+        end
+    end)
+end
+
+LoginBtn.MouseButton1Click:Connect(function()
+    if KeyInput.Text == _K then StartHub() else LoginBtn.Text = "ERROR" task.wait(1) LoginBtn.Text = "VERIFICAR" end
+end)
+
+-- [ ANTI-AFK FINAL REFORZADO ]
+lp.Idled:Connect(function() 
+    vu:CaptureController() 
+    vu:ClickButton2(Vector2.new()) 
+    task.wait(0.5)
+    vim:SendKeyEvent(true, Enum.KeyCode.RightControl, false, game)
+    task.wait(0.1)
+    vim:SendKeyEvent(false, Enum.KeyCode.RightControl, false, game)
+end)
+
+-- Movimiento preventivo cada 2 minutos
+task.spawn(function()
+    while task.wait(120) do
+        if lp.Character and lp.Character:FindFirstChild("Humanoid") then
+            lp.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+    end
+end)
