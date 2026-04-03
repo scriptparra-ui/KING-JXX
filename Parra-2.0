@@ -18,10 +18,10 @@ local plataforma = nil
 local deletedObjects = {}
 
 -----------------------------------------------------------
--- INTERFAZ ESTILO DARK PREMIUM (ACUSADO NINJA HUB)
+-- INTERFAZ ESTILO DARK PREMIUM (JXX HUD V2)
 -----------------------------------------------------------
 local screenGui = Instance.new("ScreenGui", player.PlayerGui)
-screenGui.Name = "PARRA_PREMIUM_HUB"
+screenGui.Name = "JXX_HUB"
 screenGui.ResetOnSpawn = false
 
 -- Marco Principal
@@ -52,7 +52,7 @@ topCorner.CornerRadius = UDim.new(0, 10)
 local title = Instance.new("TextLabel", topBar)
 title.Size = UDim2.new(1, -20, 1, 0)
 title.Position = UDim2.new(0, 15, 0, 0)
-title.Text = "PARRA  HUB | v2.0"
+title.Text = "JXX-HUB | v2.0"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.GothamBold
 title.TextSize = 16
