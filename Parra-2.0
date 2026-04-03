@@ -1,0 +1,224 @@
+local player = game.Players.LocalPlayer
+local RS = game:GetService("RunService")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local UIS = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+-- CONFIGURACIÓN DE DESTINOS
+local VENDEDOR = Vector3.new(510.6, 3.6, 599.5) 
+local DEPA1 = Vector3.new(1107.1, 10.1, 455.6)
+local DEPA2 = Vector3.new(1107.3, 10.1, 427.6)
+local DEPA3 = Vector3.new(1020.9, 9.5, 244.0) 
+local DEPA4 = Vector3.new(1020.3, 10.1, 215.3)
+
+local DISTANCIA_NORMAL = 8 
+local DISTANCIA_VENTA = 11 
+local estaAbajo = false
+local plataforma = nil
+local deletedObjects = {}
+
+-----------------------------------------------------------
+-- INTERFAZ ESTILO DARK PREMIUM (ACUSADO NINJA HUB)
+-----------------------------------------------------------
+local screenGui = Instance.new("ScreenGui", player.PlayerGui)
+screenGui.Name = "PARRA_PREMIUM_HUB"
+screenGui.ResetOnSpawn = false
+
+-- Marco Principal
+local mainFrame = Instance.new("Frame", screenGui)
+mainFrame.Size = UDim2.new(0, 550, 0, 400)
+mainFrame.Position = UDim2.new(0.5, -275, 0.5, -200)
+mainFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true
+mainFrame.Draggable = true
+
+local mainCorner = Instance.new("UICorner", mainFrame)
+mainCorner.CornerRadius = UDim.new(0, 10)
+
+local mainStroke = Instance.new("UIStroke", mainFrame)
+mainStroke.Color = Color3.fromRGB(40, 40, 40)
+mainStroke.Thickness = 2
+
+-- Barra de Título
+local topBar = Instance.new("Frame", mainFrame)
+topBar.Size = UDim2.new(1, 0, 0, 40)
+topBar.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+topBar.BorderSizePixel = 0
+
+local topCorner = Instance.new("UICorner", topBar)
+topCorner.CornerRadius = UDim.new(0, 10)
+
+local title = Instance.new("TextLabel", topBar)
+title.Size = UDim2.new(1, -20, 1, 0)
+title.Position = UDim2.new(0, 15, 0, 0)
+title.Text = "PARRA  HUB | v2.0"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 16
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.BackgroundTransparency = 1
+
+-- Contenedor Izquierdo (Controles)
+local leftPanel = Instance.new("Frame", mainFrame)
+leftPanel.Size = UDim2.new(0.5, -15, 1, -60)
+leftPanel.Position = UDim2.new(0, 10, 0, 50)
+leftPanel.BackgroundTransparency = 1
+
+-- Contenedor Derecho (Teleports)
+local rightPanel = Instance.new("Frame", mainFrame)
+rightPanel.Size = UDim2.new(0.5, -15, 1, -60)
+rightPanel.Position = UDim2.new(0.5, 5, 0, 50)
+rightPanel.BackgroundTransparency = 1
+
+local function crearBotonEstilo(txt, y, col, parent)
+    local b = Instance.new("TextButton", parent)
+    b.Size = UDim2.new(1, 0, 0, 35)
+    b.Position = UDim2.new(0, 0, 0, y)
+    b.BackgroundColor3 = col
+    b.Text = txt
+    b.TextColor3 = Color3.new(1,1,1)
+    b.Font = Enum.Font.GothamSemibold
+    b.TextSize = 14
+    b.AutoButtonColor = true
+    
+    local c = Instance.new("UICorner", b)
+    c.CornerRadius = UDim.new(0, 6)
+    return b
+end
+
+-- Botones Panel Izquierdo
+local btnPiso = crearBotonEstilo("BAJAR PISO (8)", 0, Color3.fromRGB(35, 35, 35), leftPanel)
+local btnRuta = crearBotonEstilo("AUTO-COMPRA (FULL)", 45, Color3.fromRGB(0, 80, 40), leftPanel)
+local btnVenta = crearBotonEstilo("AUTO-VENTA (DEEP)", 90, Color3.fromRGB(0, 40, 100), leftPanel)
+local btnAutoFarm = crearBotonEstilo("CARGAR FARM MIO", 135, Color3.fromRGB(150, 0, 20), leftPanel)
+
+local labelCant = Instance.new("TextLabel", leftPanel)
+labelCant.Text = "CANTIDAD DE ITEMS:"
+labelCant.Size = UDim2.new(1, 0, 0, 20)
+labelCant.Position = UDim2.new(0, 0, 0, 180)
+labelCant.TextColor3 = Color3.fromRGB(150,150,150)
+labelCant.Font = Enum.Font.GothamBold
+labelCant.TextSize = 11
+labelCant.BackgroundTransparency = 1
+
+local inputCantidad = Instance.new("TextBox", leftPanel)
+inputCantidad.Size = UDim2.new(1, 0, 0, 30)
+inputCantidad.Position = UDim2.new(0, 0, 0, 200)
+inputCantidad.Text = "20"
+inputCantidad.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+inputCantidad.TextColor3 = Color3.new(1,1,1)
+Instance.new("UICorner", inputCantidad).CornerRadius = UDim.new(0, 6)
+
+local btnGetTool = crearBotonEstilo("DEL TOOL 🔨", 240, Color3.fromRGB(45, 45, 50), leftPanel)
+local btnResetWalls = crearBotonEstilo("RESET PAREDES 🧱", 285, Color3.fromRGB(100, 20, 20), leftPanel)
+
+-- Botones Panel Derecho (Departamentos)
+local labelDepaTitle = Instance.new("TextLabel", rightPanel)
+labelDepaTitle.Text = "[ DEPARTAMENTOS ]"
+labelDepaTitle.Size = UDim2.new(1, 0, 0, 20)
+labelDepaTitle.TextColor3 = Color3.fromRGB(0, 255, 150)
+labelDepaTitle.Font = Enum.Font.GothamBold
+labelDepaTitle.TextSize = 13
+labelDepaTitle.BackgroundTransparency = 1
+
+local btnD1 = crearBotonEstilo("VIAJAR A DEPA 1", 30, Color3.fromRGB(25, 25, 25), rightPanel)
+local btnD2 = crearBotonEstilo("VIAJAR A DEPA 2", 75, Color3.fromRGB(25, 25, 25), rightPanel)
+local btnD3 = crearBotonEstilo("VIAJAR A DEPA 3", 120, Color3.fromRGB(25, 25, 25), rightPanel)
+local btnD4 = crearBotonEstilo("VIAJAR A DEPA 4", 165, Color3.fromRGB(25, 25, 25), rightPanel)
+
+-----------------------------------------------------------
+-- LÓGICA (Mantenida como pediste)
+-----------------------------------------------------------
+
+local function bajar(dist)
+    if estaAbajo then return end
+    local root = player.Character:FindFirstChild("HumanoidRootPart")
+    if not root then return end
+    plataforma = Instance.new("Part", game.Workspace)
+    plataforma.Size = Vector3.new(1000000, 1, 1000000)
+    plataforma.Anchored = true
+    plataforma.Transparency = 1
+    plataforma.CFrame = root.CFrame * CFrame.new(0, -dist - 3, 0)
+    root.CFrame = root.CFrame * CFrame.new(0, -dist, 0)
+    estaAbajo = true
+end
+
+local function subir(dist)
+    local root = player.Character:FindFirstChild("HumanoidRootPart")
+    if plataforma then plataforma:Destroy() plataforma = nil end
+    if root and estaAbajo then 
+        root.CFrame = CFrame.new(root.Position.X, root.Position.Y + dist + 1.5, root.Position.Z) 
+    end
+    estaAbajo = false
+end
+
+local function viajarA(destino, prof)
+    if not estaAbajo then bajar(prof) end
+    local hum = player.Character:FindFirstChild("Humanoid")
+    local root = player.Character:FindFirstChild("HumanoidRootPart")
+    if not hum or not root then return end
+    while (Vector2.new(root.Position.X, root.Position.Z) - Vector2.new(destino.X, destino.Z)).Magnitude > 4 do
+        hum:MoveTo(Vector3.new(destino.X, root.Position.Y, destino.Z))
+        RS.Heartbeat:Wait()
+    end
+    task.wait(0.3)
+    subir(prof)
+end
+
+-- CARGAR EL AUTO FARM MIO
+btnAutoFarm.MouseButton1Click:Connect(function()
+    btnAutoFarm.Text = "CARGANDO..."
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptparra-ui/KING-JXX/refs/heads/main/PARRA-JXX"))()
+    task.wait(1)
+    btnAutoFarm.Text = "FARM ACTIVADO ✅"
+end)
+
+-- AUTO-COMPRA (COMIDA + AGUA)
+btnRuta.MouseButton1Click:Connect(function()
+    viajarA(VENDEDOR, DISTANCIA_NORMAL)
+    task.wait(1)
+    local prompt = nil
+    for _, p in pairs(game.Workspace:GetDescendants()) do
+        if p:IsA("ProximityPrompt") and (player.Character.HumanoidRootPart.Position - p.Parent.Position).Magnitude < 15 then
+            prompt = p break
+        end
+    end
+    if prompt then
+        prompt:InputHoldBegin() task.wait(prompt.HoldDuration + 0.2) prompt:InputHoldEnd()
+        task.wait(2)
+        local size = game.Workspace.CurrentCamera.ViewportSize
+        local cant = tonumber(inputCantidad.Text) or 20
+        
+        for i=1,2 do VirtualInputManager:SendMouseButtonEvent(size.X*0.4, size.Y*0.8, 0, true, game, 1) task.wait(0.3) VirtualInputManager:SendMouseButtonEvent(size.X*0.4, size.Y*0.8, 0, false, game, 1) end
+        task.wait(4)
+        local function c(y) for i=1,cant do VirtualInputManager:SendMouseButtonEvent(size.X*0.5, size.Y*y, 0, true, game, 1) task.wait(0.1) VirtualInputManager:SendMouseButtonEvent(size.X*0.5, size.Y*y, 0, false, game, 1) task.wait(0.3) end end
+        c(0.48) c(0.42) c(0.35) -- Incluye el slot del agua
+        task.wait(1) bajar(DISTANCIA_NORMAL)
+    end
+end)
+
+btnPiso.MouseButton1Click:Connect(function() if estaAbajo then subir(DISTANCIA_NORMAL) else bajar(DISTANCIA_NORMAL) end end)
+btnVenta.MouseButton1Click:Connect(function() viajarA(VENDEDOR, DISTANCIA_VENTA) end)
+btnD1.MouseButton1Click:Connect(function() viajarA(DEPA1, DISTANCIA_NORMAL) end)
+btnD2.MouseButton1Click:Connect(function() viajarA(DEPA2, DISTANCIA_NORMAL) end)
+btnD3.MouseButton1Click:Connect(function() viajarA(DEPA3, DISTANCIA_NORMAL) end)
+btnD4.MouseButton1Click:Connect(function() viajarA(DEPA4, DISTANCIA_NORMAL) end)
+
+btnGetTool.MouseButton1Click:Connect(function()
+    local t = Instance.new("Tool", player.Backpack)
+    t.Name = "👑p"
+    t.RequiresHandle = false
+    t.Activated:Connect(function()
+        local target = player:GetMouse().Target
+        if target and target:IsA("BasePart") and not target:IsDescendantOf(player.Character) then
+            table.insert(deletedObjects, {o = target:Clone(), p = target.Parent})
+            target:Destroy()
+        end
+    end)
+end)
+
+btnResetWalls.MouseButton1Click:Connect(function()
+    for _, data in pairs(deletedObjects) do if data.o and data.p then data.o.Parent = data.p end end
+    deletedObjects = {}
+end)
