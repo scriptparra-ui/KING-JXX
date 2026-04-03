@@ -24,7 +24,7 @@ end
 local ScreenGui = Instance.new("ScreenGui", coreGui)
 ScreenGui.Name = GetRnd()
 local tag = Instance.new("BoolValue", ScreenGui)
-tag.Name = "AC_TAG_SEC"
+tag.Name = "JXX_TAG_SEC"
 
 -- [ PALETA DE COLORES: MORADO Y NEGRO ]
 local PurpleTheme = Color3.fromRGB(130, 50, 255) -- Morado Neón
@@ -209,7 +209,7 @@ local function StartHub()
                 elseif i.Name:find("Medium") then c.M=c.M+1 
                 elseif i.Name:find("Large") then c.L=c.L+1 end
             end
-            InfoLabel.Text = string.format("\n [ ACUSADO MASHMELLOW HUB ]\n\n PRODUCTOS:\n - Small: %d\n - Medium: %d\n - Large: %d\n\n MATERIALES:\n - Agua: %d\n - Azucar: %d\n - Gelatina:%d\n - Bolsas: %d\n\n [ SEGURIDAD ]\n Status: Protegido\n Anti-Kick: Activo", c.Sm, c.M, c.L, c.W, c.S, c.G, c.B)
+            InfoLabel.Text = string.format("\n [ JXX MASHMELLOW ]\n\n PRODUCTOS:\n - Small: %d\n - Medium: %d\n - Large: %d\n\n MATERIALES:\n - Agua: %d\n - Azucar: %d\n - Gelatina:%d\n - Bolsas: %d\n\n [ SEGURIDAD ]\n Status: Protegido\n Anti-Kick: Activo", c.Sm, c.M, c.L, c.W, c.S, c.G, c.B)
         end
     end)
 end
