@@ -105,13 +105,13 @@ local function ExecuteHub()
 
     -- // LOGIN //
     local KeyFrame = Instance.new("Frame", ScreenGui); KeyFrame.Size = UDim2.new(0, 400, 0, 250); KeyFrame.Position = UDim2.new(0.5, -200, 0.5, -125); KeyFrame.BackgroundColor3 = Color3.fromRGB(5, 5, 5); KeyFrame.Active = true; KeyFrame.Draggable = true; Instance.new("UICorner", KeyFrame); Instance.new("UIStroke", KeyFrame).Color = Color3.fromRGB(150, 0, 0)
-    local KeyTitle = Instance.new("TextLabel", KeyFrame); KeyTitle.Size = UDim2.new(1, 0, 0, 80); KeyTitle.Text = "PARRA NINJA HUB\nINGRESE CLAVE"; KeyTitle.TextColor3 = Color3.new(1,0,0); KeyTitle.BackgroundTransparency = 1; KeyTitle.Font = Enum.Font.Code; KeyTitle.TextSize = 18
+    local KeyTitle = Instance.new("TextLabel", KeyFrame); KeyTitle.Size = UDim2.new(1, 0, 0, 80); KeyTitle.Text = "JXX-HUB-V2\nINGRESE CLAVE"; KeyTitle.TextColor3 = Color3.new(1,0,0); KeyTitle.BackgroundTransparency = 1; KeyTitle.Font = Enum.Font.Code; KeyTitle.TextSize = 18
     local KeyInput = Instance.new("TextBox", KeyFrame); KeyInput.Size = UDim2.new(0, 280, 0, 50); KeyInput.Position = UDim2.new(0.5, -140, 0.45, 0); KeyInput.PlaceholderText = "••••••••"; KeyInput.Text = ""; KeyInput.BackgroundColor3 = Color3.fromRGB(15,0,0); KeyInput.TextColor3 = Color3.new(1,1,1); Instance.new("UICorner", KeyInput)
     local KeyBtn = Instance.new("TextButton", KeyFrame); KeyBtn.Size = UDim2.new(0, 180, 0, 45); KeyBtn.Position = UDim2.new(0.5, -90, 0.75, 0); KeyBtn.Text = "LOG IN"; KeyBtn.BackgroundColor3 = Color3.fromRGB(30, 0, 0); KeyBtn.TextColor3 = Color3.new(1,1,1); KeyBtn.Font = Enum.Font.Code; Instance.new("UICorner", KeyBtn)
 
     -- // MENÚ //
     local MainFrame = Instance.new("Frame", ScreenGui); MainFrame.Size = UDim2.new(0, 560, 0, 480); MainFrame.Position = UDim2.new(0.5, -280, 0.5, -240); MainFrame.BackgroundColor3 = Color3.fromRGB(10, 0, 0); MainFrame.Visible = false; MainFrame.Active = true; MainFrame.Draggable = true; Instance.new("UICorner", MainFrame); Instance.new("UIStroke", MainFrame).Color = Color3.fromRGB(200, 0, 0)
-    local Banner = Instance.new("TextLabel", MainFrame); Banner.Size = UDim2.new(1, 0, 0, 50); Banner.Text = "PARRA NINJA HUB | ELITE"; Banner.TextColor3 = Color3.new(1,0,0); Banner.BackgroundTransparency = 1; Banner.Font = Enum.Font.Code; Banner.TextSize = 14
+    local Banner = Instance.new("TextLabel", MainFrame); Banner.Size = UDim2.new(1, 0, 0, 50); Banner.Text = "PARRA-HUD-V2| ELITE"; Banner.TextColor3 = Color3.new(1,0,0); Banner.BackgroundTransparency = 1; Banner.Font = Enum.Font.Code; Banner.TextSize = 14
 
     KeyBtn.MouseButton1Click:Connect(function()
         if KeyInput.Text == CLAVE_CORRECTA then KeyFrame.Visible = false; MainFrame.Visible = true 
