@@ -1,5 +1,5 @@
 -- [[ JXX-HUD-V2 - RED & BLACK ELITE FULL EDITION 👑 ]]
-local CLAVE_CORRECTA = "papadeacusado"
+local CLAVE_CORRECTA = "Nino03"
 local Players = game:GetService("Players")
 local L_Plr = Players.LocalPlayer
 local RunService = game:GetService("RunService")
